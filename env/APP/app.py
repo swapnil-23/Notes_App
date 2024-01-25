@@ -75,4 +75,25 @@ def register():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    from gunicorn.app.base import BaseApplication
+
+    class FlaskApp(BaseApplication):
+        def __init__(self, app, options=None):
+            self.application = app
+            self.options = options or {}
+            super().__init__()
+
+        def load_config(self):
+            for key, value in self.options.items():
+                self.cfg.set(key, value)
+
+        def load(self):
+            return self.application
+
+    options = {
+        'bind': '127.0.0.1:5000',  # Adjust the host and port as needed
+        'workers': 4,  # Adjust the number of workers based on your needs
+    }
+
+    flask_app = FlaskApp(app, options)
+    flask_app.run()
