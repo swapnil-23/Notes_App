@@ -72,8 +72,6 @@ def register():
         mesage = 'Please fill out the form !'
     return render_template('register.html', mesage = mesage)  
 
-
-
 if __name__ == "__main__":
     from gunicorn.app.base import BaseApplication
 
@@ -91,8 +89,8 @@ if __name__ == "__main__":
             return self.application
 
     options = {
-        'bind': '127.0.0.1:5000',  # Adjust the host and port as needed
-        'workers': 4,  # Adjust the number of workers based on your needs
+        'bind': '0.0.0.0',  # Adjust the host and port as needed
+        'workers': 3,  # Adjust the number of workers based on your needs
     }
 
     flask_app = FlaskApp(app, options)
