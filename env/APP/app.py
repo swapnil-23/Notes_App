@@ -3,8 +3,15 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 import yaml
+from flask import Flask
+from prometheus_flask_exporter import PrometheusMetrics
+
+
+
+
 
 app = Flask(__name__, template_folder='template')
+metrics = PrometheusMetrics(app)
 
 app.secret_key = 'xyzsdfg'
 
